@@ -42,7 +42,7 @@ namespace lib{
 				return ax*bx+ay*by+az*bz;
 			}
 			
-			std::vector<int> cross(int ax, int ay, int az, int bx, int by, int bz){
+			vector<int> cross(int ax, int ay, int az, int bx, int by, int bz){
 				TwoDimension twod;
 				int x = twod.determinant(ay, az, by, bz);
 				int y = twod.determinant(ax, az, bx, bz)*-1;
@@ -67,6 +67,8 @@ namespace lib{
     class Matrix{
 		
 		public:
+			
+			vector<vector<int>> unitmatrix = {{1, 0}, {0, 1}};
 		
 			int gcd(int a, int b){
 				return b==0?a:gcd(b, a%b);
@@ -132,6 +134,27 @@ namespace lib{
 				return ans;
 			}
 			
+			vector<vector<int>> matrix_multiply(vector<vector<int>> a, vector<vector<int>> b){
+				vector<vector<int>> c(a.size());
+				for(int i = 0; i < a.size(); i++){
+					for(int j = 0; j < a.size(); j++){
+						int tmp = 0;
+						for(int k = 0; k < b.size(); k++){
+							tmp += a[i][k]*b[k][j];
+						}
+						c[i].emplace_back(tmp);
+					}
+				}
+				return c;
+			}
+			
+			vector<vector<int>> matrix_fast_pow(vector<vector<int>> a, int n){
+				if(n==0) return unitmatrix;
+				if(n==1) return a;
+				vector<vector<int>> tmp = matrix_multiply(a, a);
+				if(n%2==0) return matrix_fast_pow(tmp, n/2);
+				return matrix_multiply(matrix_fast_pow(tmp, (n-1)/2), a);
+			}
     };
 
 }

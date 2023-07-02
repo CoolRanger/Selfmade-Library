@@ -5,21 +5,17 @@ using namespace std;
 using namespace lib;
 
 
-signed main() {
-  TwoDimension twod;
-  ThreeDimension threed;
-  Matrix mtx;
-  int n; cin >> n;
-  vector<vector<int>> v(n);
-  for(int i = 0; i<n; i++){
-	for(int j = 0; j < n+1; j++){
-  		int a; cin >> a;
-  		v[i].emplace_back(a);
+signed main(){
+	ThreeDimension threed;
+	TwoDimension twod;
+	Matrix mtx; 
+	int n; cin >> n;
+	vector<vector<int>> v = {{1, 1}, {1, 0}};
+	v = mtx.matrix_fast_pow(v, n-1);
+	for(int i = 0; i< 2; i++){
+		for(int j = 0; j < 2; j++){
+			cout << v[i][j] << " ";
 		}
+		cout << '\n';
 	}
-	vector<double> ans = mtx.GaussianElimination(v);
-	for(auto i:ans){
-		cout << i << '\n';
-	}
-  return 0;
 }
